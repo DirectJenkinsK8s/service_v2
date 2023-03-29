@@ -1,11 +1,16 @@
-# This requirements are for development and testing only, not for production.
-pytest
+black
+codecov
 coverage
 flake8
-black
-isort
-pytest-cov
-codecov
-mypy
+flask-debugtoolbar
+flask-shell-ipython
 gitchangelog
+ipdb
+isort
 mkdocs
+mypy
+pre-commit
+pytest
+pytest-cov
+pytest-flask
+python-dotenv

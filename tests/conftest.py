@@ -1,5 +1,25 @@
 import sys
+
 import pytest
+
+from service_v2 import create_app
+from service_v2.ext.commands import populate_db
+from service_v2.ext.database import db
+
+
+@pytest.fixture(scope="session")
+def app():
+    app = create_app(FORCE_ENV_FOR_DYNACONF="testing")
+    with app.app_context():
+        db.create_all()
+        yield app
+        db.drop_all()
+
+
+@pytest.fixture(scope="session")
+def products(app):
+    with app.app_context():
+        return populate_db()
 
 
 # each test runs on cwd to its temp dir
