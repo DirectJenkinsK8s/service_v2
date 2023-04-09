@@ -35,6 +35,15 @@ lint:             ## Run pep8, black, mypy linters.
 	$(ENV_PREFIX)black -l 79 --check service_v2/
 	$(ENV_PREFIX)black -l 79 --check tests/
 
+.PHONY: virtualenv
+virtualenv:       ## Create a virtual environment.
+	@echo "creating virtualenv ..."
+	@rm -rf venv
+	@python3 -m venv venv
+	@./.venv/bin/pip install -U pip
+	@./.venv/bin/pip install -e .[test]
+	@echo
+	@echo "!!! Please run 'source venv/bin/activate' to enable the environment !!!"
 
 .PHONY: test
 test: lint   ## Run tests and generate coverage report.
