@@ -13,6 +13,8 @@
 //     }
 // }
 
+module = "service_v2"
+
 pipeline {
     agent {
         kubernetes {
@@ -44,12 +46,21 @@ pipeline {
                 sh  ' make virtualenv'
             }
         }
+        stage('Run Code Quality') {
+            steps {
+                echo "Running tests"
+                sh  "venv/bin/pylint --rcfile .pylintrc $module > pylint.log"
+                echo "linting Success, Generating Report"
+                recordIssues enabledForFailure: true, aggregatingResults: true, tool: pyLint(pattern: 'pylint.log')
+            }
+        }
         stage('Run Tests') {
             steps {
                 echo "Running tests"
-                sh ' venv/bin/pylint --rcfile .pylintrc . > pylint.log'
-                echo "linting Success, Generating Report"
-                recordIssues enabledForFailure: true, aggregatingResults: true, tool: pyLint(pattern: 'pylint.log')
+                sh  "venv/bin/pytest --junitxml=reports/test-report.xml --cov=$module --cov-report=xml:reports/coverage.xml --cov-report=html:reports/coverage $module"
+                echo "Tests Success, Generating Report"
+                junit 'reports/test-report.xml'
+                cobertura coberturaReportFile: 'reports/coverage.xml'
             }
         }
     }
