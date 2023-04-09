@@ -10,6 +10,7 @@ isort
 mkdocs
 mypy
 pre-commit
+pylint
 pytest
 pytest-cov
 pytest-flask
