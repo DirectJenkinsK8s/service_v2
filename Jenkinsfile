@@ -48,7 +48,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo "Running tests"
-                sh ' venv/bin/pylint --rcfile .pylintrc . >> pylint.log'
+                sh ' venv/bin/pylint --rcfile .pylintrc . > pylint.log'
                 echo "linting Success, Generating Report"
                 recordIssues enabledForFailure: true, aggregatingResults: true, tool: pyLint(pattern: 'pylint.log')
             }
