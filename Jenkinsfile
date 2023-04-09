@@ -44,7 +44,6 @@ pipeline {
                 sh  ' make virtualenv'
             }
         }
-
         stage('Run Tests') {
             steps {
                 echo "Running tests"
