@@ -48,7 +48,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 echo "Running tests"
-                sh ' venv/bin/pylint --output-format=parseable --fail-under=<threshold value> module --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" >> pylint.log"'
+                sh ' venv/bin/pylint --output-format=parseable --fail-under=<threshold value> module --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" >> pylint.log'
                 echo "linting Success, Generating Report"
                 recordIssues enabledForFailure: true, aggregatingResults: true, tool: pyLint(pattern: 'pylint.log')
             }
