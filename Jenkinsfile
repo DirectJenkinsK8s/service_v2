@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "Building virtualenv"
                 sh  ''' make virtualenv
-                        source venv/bin/activate
+                        . venv/bin/activate
                     '''
             }
         }
